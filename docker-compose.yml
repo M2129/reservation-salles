@@ -1,0 +1,58 @@
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: reservation_salles_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - reservation_salles_net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reservation_salles_app
+    volumes:
+      - ./:/var/www/html
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${MYSQL_DATABASE:-university_rooms}
+      DB_USERNAME: ${MYSQL_USER:-app}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-app_password}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - reservation_salles_net
+
+  mysql:
+    image: mysql:8.4
+    container_name: reservation_salles_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-university_rooms}
+      MYSQL_USER: ${MYSQL_USER:-app}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-app_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_password}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - reservation_salles_net
+
+networks:
+  reservation_salles_net:
+    driver: bridge
+
+volumes:
+  mysql_data:
