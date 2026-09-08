@@ -4,6 +4,17 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
+use Dotenv\Dotenv;
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+$projectRoot = dirname(__DIR__);
+Dotenv::createImmutable($projectRoot)->safeLoad();
+
+$capsule = new Capsule();
+$capsule->addConnection(require $projectRoot . '/config/database.php');
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
 /**
  * PHASE 1 — vérification de l'infrastructure Docker.
  *
@@ -26,20 +37,7 @@ $dbError = null;
 $autoloadStatus = class_exists(\App\Application::class) ? 'chargé' : 'échec';
 
 try {
-    $host = getenv('DB_HOST') ?: 'mysql';
-    $port = getenv('DB_PORT') ?: '3306';
-    $database = getenv('DB_DATABASE') ?: 'university_rooms';
-    $username = getenv('DB_USERNAME') ?: 'app';
-    $password = getenv('DB_PASSWORD') ?: 'app_password';
-
-    $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $host, $port, $database);
-
-    $pdo = new PDO($dsn, $username, $password, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_TIMEOUT => 3,
-    ]);
-
-    $pdo->query('SELECT 1');
+    $capsule->getConnection()->select('SELECT 1');
     $dbStatus = 'connectée';
 } catch (Throwable $e) {
     $dbStatus = 'échec';
@@ -56,7 +54,7 @@ try {
 <body>
     <main>
         <h1>Application Gestion des réservations de salles universitaires</h1>
-        <p>Phase 2 — Composer et autoload PSR-4, sur infrastructure Docker</p>
+        <p>Phase 3 — Eloquent et connexion MySQL, sur infrastructure Docker</p>
 
         <ul>
             <li>Navigateur → Nginx → PHP-FPM → PHP : <strong>OK</strong></li>
