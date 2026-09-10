@@ -17,6 +17,8 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 - `src/Validation/` : contrat, résultat et validateurs Respect.Validation pour les
   salles et réservations.
 - `src/DTO/` : DTO typés pour convertir les données validées des salles et réservations.
+- `src/Repository/` : contrats et implémentations Eloquent pour les salles et réservations,
+  y compris la recherche de conflits et l'annulation.
 
 ## v0.0.0 — Phase 1 : infrastructure Docker
 

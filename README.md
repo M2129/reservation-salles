@@ -7,8 +7,8 @@ Projet pédagogique (ODC Sonatel Academy) développé en PHP orienté objet **sa
 complet**, avec des composants spécialisés : FastRoute, Respect\Validation, Eloquent
 (`illuminate/database`), PHP-DI.
 
-> Ce projet avance par phases. Ce README documente l'état actuel de la **Phase 8**
-> (DTO et conversion des données typées).
+> Ce projet avance par phases. Ce README documente l'état actuel de la **Phase 9**
+> (repositories et accès aux données).
 
 ## Prérequis
 
@@ -124,7 +124,7 @@ survivent à un `docker compose down`. Seule la commande explicitement destructi
 - [x] Phase 6 — Seed
 - [x] Phase 7 — Validation
 - [x] Phase 8 — DTO
-- [ ] Phase 9 — Repositories
+- [x] Phase 9 — Repositories
 - [ ] Phase 10 — Services + règles métier
 - [ ] Phase 11 — Controllers + Views
 - [ ] Phase 12 — FastRoute
