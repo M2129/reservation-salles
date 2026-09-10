@@ -7,8 +7,8 @@ Projet pédagogique (ODC Sonatel Academy) développé en PHP orienté objet **sa
 complet**, avec des composants spécialisés : FastRoute, Respect\Validation, Eloquent
 (`illuminate/database`), PHP-DI.
 
-> Ce projet avance par phases. Ce README documente l'état de la **Phase 1**
-> (infrastructure Docker). Il sera complété à chaque phase suivante.
+> Ce projet avance par phases. Ce README documente l'état actuel de la **Phase 9**
+> (repositories et accès aux données).
 
 ## Prérequis
 
@@ -87,7 +87,14 @@ Composer (à partir de la Phase 2, une fois des dépendances déclarées) :
 ```bash
 docker compose exec app composer install
 docker compose exec app composer dump-autoload
+docker compose exec app php database/migrate.php
+docker compose exec app php database/seed.php
 ```
+
+La connexion Eloquent est initialisée une seule fois par le Front Controller :
+`.env` est chargé par `vlucas/phpdotenv`, puis `config/database.php` fournit la
+configuration à `Illuminate\Database\Capsule\Manager`. Les classes métier ne
+lisent pas directement les variables d'environnement.
 
 PHP :
 
@@ -111,13 +118,13 @@ survivent à un `docker compose down`. Seule la commande explicitement destructi
 
 - [x] Phase 1 — Docker + Nginx + PHP-FPM + MySQL
 - [x] Phase 2 — Composer + PSR-4 + dépendances
-- [ ] Phase 3 — Eloquent + connexion MySQL
-- [ ] Phase 4 — Models + relations
-- [ ] Phase 5 — Migrations
-- [ ] Phase 6 — Seed
-- [ ] Phase 7 — Validation
-- [ ] Phase 8 — DTO
-- [ ] Phase 9 — Repositories
+- [x] Phase 3 — Eloquent + connexion MySQL
+- [x] Phase 4 — Models + relations
+- [x] Phase 5 — Migrations
+- [x] Phase 6 — Seed
+- [x] Phase 7 — Validation
+- [x] Phase 8 — DTO
+- [x] Phase 9 — Repositories
 - [ ] Phase 10 — Services + règles métier
 - [ ] Phase 11 — Controllers + Views
 - [ ] Phase 12 — FastRoute
