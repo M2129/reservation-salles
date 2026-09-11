@@ -20,6 +20,8 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 - `src/Repository/` : contrats et implémentations Eloquent pour les salles et réservations,
   y compris la recherche de conflits et l'annulation.
 - `src/Service/` et `src/Exception/` : création, annulation et règles métier des réservations.
+- `src/Controller/`, `src/View/` et `templates/` : contrôleurs, rendu HTML et formulaires
+  pour les salles et réservations.
 
 ## v0.0.0 — Phase 1 : infrastructure Docker
 

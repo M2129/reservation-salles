@@ -35,7 +35,7 @@ try {
 <body>
     <main>
         <h1>Application Gestion des réservations de salles universitaires</h1>
-        <p>Phase 10 — services métier, sur infrastructure Docker</p>
+        <p>Phase 11 — contrôleurs et vues, sur infrastructure Docker</p>
         <ul>
             <li>Navigateur → Nginx → PHP-FPM → PHP : <strong>OK</strong></li>
             <li>Composer → autoload PSR-4 : <strong><?= htmlspecialchars($autoloadStatus, ENT_QUOTES, 'UTF-8') ?></strong></li>
