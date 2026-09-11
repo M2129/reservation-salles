@@ -1,0 +1,5 @@
+<?php require_once dirname(__DIR__) . '/layout/header.php'; ?>
+<p class="eyebrow">Réservation #<?= $reservation->id ?></p><h1><?= $escape($reservation->motif) ?></h1>
+<dl class="details"><dt>Salle</dt><dd><?= $escape($reservation->salle?->nom ?? 'Salle inconnue') ?></dd><dt>Responsable</dt><dd><?= $escape($reservation->responsable) ?></dd><dt>Email</dt><dd><?= $escape($reservation->email) ?></dd><dt>Créneau</dt><dd><?= $reservation->date_debut?->format('d/m/Y H:i') ?> → <?= $reservation->date_fin?->format('d/m/Y H:i') ?></dd><dt>Statut</dt><dd><?= $escape($reservation->statut) ?></dd></dl>
+<?php if ($reservation->statut === 'confirmee'): ?><form method="post" action="/reservations/<?= $reservation->id ?>/cancel"><button class="button danger" type="submit">Annuler la réservation</button></form><?php endif; ?>
+<?php require_once dirname(__DIR__) . '/layout/footer.php'; ?>
