@@ -17,7 +17,7 @@ final class View
 
         extract($data, EXTR_SKIP);
         ob_start();
-        require $chemin;
+        require_once $chemin;
 
         return (string) ob_get_clean();
     }

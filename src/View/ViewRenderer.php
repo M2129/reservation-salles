@@ -25,7 +25,7 @@ final class ViewRenderer
 
         extract($data, EXTR_SKIP);
         ob_start();
-        include $path;
+        include_once $path;
 
         return (string) ob_get_clean();
     }
