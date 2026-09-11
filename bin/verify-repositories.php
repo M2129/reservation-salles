@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use App\Repository\EloquentSalleRepository;
 use App\Repository\EloquentReservationRepository;
@@ -10,7 +10,7 @@ use App\Model\Reservation;
 use Dotenv\Dotenv;
 
 Dotenv::createImmutable(dirname(__DIR__))->safeLoad();
-$bootDatabase = require dirname(__DIR__) . '/config/database.php';
+$bootDatabase = require_once dirname(__DIR__) . '/config/database.php';
 $bootDatabase();
 
 function check(string $label, bool $condition): void

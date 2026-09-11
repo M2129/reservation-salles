@@ -19,6 +19,7 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 - `src/DTO/` : DTO typés pour convertir les données validées des salles et réservations.
 - `src/Repository/` : contrats et implémentations Eloquent pour les salles et réservations,
   y compris la recherche de conflits et l'annulation.
+- `src/Service/` et `src/Exception/` : création, annulation et règles métier des réservations.
 
 ## v0.0.0 — Phase 1 : infrastructure Docker
 
