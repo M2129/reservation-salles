@@ -7,8 +7,8 @@ Projet pédagogique (ODC Sonatel Academy) développé en PHP orienté objet **sa
 complet**, avec des composants spécialisés : FastRoute, Respect\Validation, Eloquent
 (`illuminate/database`), PHP-DI.
 
-> Ce projet avance par phases. Ce README documente l'état actuel de la **Phase 11**
-> (contrôleurs et vues HTML).
+> Ce projet avance par phases. Ce README documente l'état actuel de la **Phase 13**
+> (PHP-DI et injection de dépendances).
 
 ## Prérequis
 
@@ -114,6 +114,42 @@ Les données MySQL sont stockées dans le volume Docker nommé `mysql_data`. Ell
 survivent à un `docker compose down`. Seule la commande explicitement destructive
 `docker compose down -v` supprime ce volume et donc les données.
 
+## Déploiement sur Render
+
+Le service web Render doit utiliser le runtime **Docker** avec :
+
+- Dockerfile : `Dockerfile.render`
+- Docker context : `.`
+- Health check path : `/`
+
+`Dockerfile.render` lance Nginx et PHP-FPM dans le même conteneur. Nginx écoute
+automatiquement le port fourni par Render via la variable `$PORT`.
+
+Render ne fournit pas de service MySQL intégré pour ce projet. Il faut donc
+utiliser un fournisseur MySQL externe et renseigner dans les variables
+d'environnement Render :
+
+```text
+APP_ENV=production
+APP_DEBUG=false
+DB_CONNECTION=mysql
+DB_HOST=<hote-mysql-externe>
+DB_PORT=3306
+DB_DATABASE=<nom-de-la-base>
+DB_USERNAME=<utilisateur>
+DB_PASSWORD=<mot-de-passe>
+```
+
+Ne pas mettre ces valeurs dans GitHub. Le fichier `render.yaml` prépare les
+variables non secrètes et laisse les secrets à saisir dans le tableau de bord
+Render. Après le premier déploiement, exécuter les migrations et le seed depuis
+un shell de déploiement ou une tâche ponctuelle :
+
+```bash
+php database/migrate.php
+php database/seed.php
+```
+
 ## État du projet
 
 - [x] Phase 1 — Docker + Nginx + PHP-FPM + MySQL
@@ -127,8 +163,8 @@ survivent à un `docker compose down`. Seule la commande explicitement destructi
 - [x] Phase 9 — Repositories
 - [x] Phase 10 — Services + règles métier
 - [x] Phase 11 — Controllers + Views
-- [ ] Phase 12 — FastRoute
-- [ ] Phase 13 — PHP-DI
+- [x] Phase 12 — FastRoute
+- [x] Phase 13 — PHP-DI
 - [ ] Phase 14 — Tests
 - [ ] Phase 15 — Sécurité + finition
 - [ ] Phase 16 — README + ARCHITECTURE.md complets

@@ -22,6 +22,10 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 - `src/Service/` et `src/Exception/` : création, annulation et règles métier des réservations.
 - `src/Controller/`, `src/View/` et `templates/` : contrôleurs, rendu HTML et formulaires
   pour les salles et réservations.
+- `routes/web.php` et `src/Application.php` : dispatch FastRoute, routes dynamiques et
+  gestion des erreurs HTTP 404/405/500.
+- `config/container.php` : container PHP-DI avec autowiring, bindings des interfaces,
+  services, contrôleurs, renderer et dispatcher FastRoute.
 
 ## v0.0.0 — Phase 1 : infrastructure Docker
 

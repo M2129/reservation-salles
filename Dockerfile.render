@@ -1,11 +1,14 @@
+# Le Dockerfile Render reste explicite pour la configuration du service web.
+# Il utilise la même image HTTP que le Dockerfile principal afin que Docker Hub
+# et Render exécutent exactement le même processus.
 FROM php:8.3-fpm
 
 RUN apt-get update && apt-get install -y \
         $PHPIZE_DEPS \
         git \
-        unzip \
         nginx \
         gettext-base \
+        unzip \
         libicu-dev \
         libzip-dev \
         libonig-dev \
@@ -15,8 +18,10 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
-COPY . /var/www/html
-RUN composer install --no-dev --no-interaction --no-progress --optimize-autoloader
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-interaction --prefer-dist --optimize-autoloader
+COPY . .
+RUN composer dump-autoload --optimize --no-dev
 
 COPY docker/nginx/render.conf.template /etc/nginx/templates/default.conf.template
 COPY docker/render-entrypoint.sh /usr/local/bin/render-entrypoint

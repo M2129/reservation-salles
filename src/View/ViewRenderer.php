@@ -21,11 +21,9 @@ final class ViewRenderer
             throw new ViewNotFoundException(sprintf('Vue introuvable : %s', $template));
         }
 
-        $escape = static fn (mixed $value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
-
         extract($data, EXTR_SKIP);
         ob_start();
-        include_once $path;
+        include $path;
 
         return (string) ob_get_clean();
     }
