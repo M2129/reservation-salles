@@ -31,19 +31,32 @@ docker compose build
 docker compose up -d
 ```
 
-Vérifier que les trois services tournent :
+Vérifier que les quatre services tournent :
 
 ```bash
 docker compose ps
 ```
 
-Vous devez voir : `nginx`, `app`, `mysql`.
+Vous devez voir : `nginx`, `app`, `mysql`, `phpmyadmin`.
 
 L'application est ensuite accessible sur :
 
 ```
 http://localhost:8080
 ```
+
+phpMyAdmin est accessible sur :
+
+```text
+http://localhost:8081
+```
+
+Pour se connecter dans phpMyAdmin :
+
+- Serveur : `mysql`
+- Utilisateur : `app`
+- Mot de passe : `app_password`
+- Base de données : `university_rooms`
 
 La page d'accueil affiche le titre du projet et l'état de la connexion PHP → MySQL.
 
@@ -60,6 +73,9 @@ Navigateur
     │ TCP :3306
     ▼
   MySQL 8.4 (volume "mysql_data")
+    │ TCP :3306
+    ▼
+  phpMyAdmin (http://localhost:8081)
 ```
 
 - Nginx ne communique **qu'avec** PHP-FPM (`app:9000`), jamais `localhost`.
@@ -80,6 +96,7 @@ docker compose logs -f         # suivre les logs en direct
 docker compose logs nginx
 docker compose logs app
 docker compose logs mysql
+docker compose logs phpmyadmin
 ```
 
 Composer (à partir de la Phase 2, une fois des dépendances déclarées) :

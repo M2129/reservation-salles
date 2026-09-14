@@ -50,6 +50,23 @@ services:
     networks:
       - reservation_salles_net
 
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    container_name: reservation_salles_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${PMA_PORT:-8081}:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: "0"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - reservation_salles_net
+
 networks:
   reservation_salles_net:
     driver: bridge
